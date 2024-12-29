@@ -1,1 +1,13 @@
 
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}

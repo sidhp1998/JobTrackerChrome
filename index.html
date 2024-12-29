@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1"/>
+        <title>Job Tracker</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body> 
+        <header>
+            <h1>Job Tracker</h1><button id="btn-refresh">refresh</button>
+        </header>
 
+        <div id="add-new-job">
+            <input type="text" id="job-url" placeholder="Enter URL here" required><br>
+            <input type="text" id="job-company" placeholder="Enter Company here"><br>
+            <input type="text" id="job-role" placeholder="Enter role here"><br>
+            <input type="text" id="job-location" placeholder="Enter location here"><br>
+            <input type="text" id="job-notes" placeholder="If you have any notes..."><br>
+            <button type="submit" id="btn-add-job"">Add Job</button>
+            <button type="reset" id="btn-reset-job"">Reset</button>
+        </div>
+
+        <div id="view-all-jobs">
+            <h2>View all saved jobs</h2>
+            <div id="job-list-container">
+                <table id="job-list-table">
+                </table>
+            </div>
+        </div>
+
+    </body>
+</html>
