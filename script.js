@@ -18,6 +18,9 @@ function loadJobs() {
         jobList = JSON.parse(storedJobs);
         //renderTable(jobList);
     }
+    else{
+        jobList = [];
+    }
 }
 // List of all job statuses
 let jobStatus=["Saved","Applied","Interview","Offer","Rejected","Withdrawn","Not Interested","Other"];
@@ -28,7 +31,6 @@ class Job
 {
     constructor(url,company=null,role=null,location=null,notes=null,status=null,dateAdded=null)
     {
-        //this.jobId =null
         this.url = url;
         this.company = company;
         this.role = role;
@@ -58,7 +60,6 @@ function jobAddition()
     if(!isTextValid(jobUrlEl.value))
     {
         alert("Please enter a valid URL");
-        //return;
     }
     else
     {
