@@ -1,4 +1,109 @@
+body 
+{
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #1b1b32;
+    color: #f5f6f7;
+    font-family: Tahoma;
+    font-size: 16px;
+    margin-top: 60px;
+    min-width: 400px;
+}
 
+body div h2 
+{
+    margin: 1em auto;
+    text-align: center;
+}
+
+form 
+{
+    width: 60vw;
+    max-width: 500px;
+    min-width: 300px;
+    margin: 0 auto;
+}
+
+fieldset 
+{
+    border: none;
+    padding: 2rem 0;
+    border-bottom: 3px solid #3b3b4f;
+}
+
+fieldset:last-of-type 
+{
+    border-bottom: none;
+}
+
+label 
+{
+    display: block;
+    margin: 0.5rem 0;
+}
+
+input
+{
+    margin: 10px 0 0 0;
+    width: 100%;
+    min-height: 2em;
+    background-color: #0a0a23;
+    border: 1px solid #0a0a23;
+    color: #ffffff;
+}
+
+input[type="submit"], button[type="reset"]
+{
+    
+    width: 30%;
+    height:2em;
+    font-size:1.1rem;
+    background-color:#3b3b4f;
+    border-color:white;
+    max-width: 300px;
+    margin:1em auto;
+}
+
+.inline 
+{
+    display:inline-block;
+    width: unset;
+    margin: 0 0.5em 0 0;
+    vertical-align: middle;
+    color: #dfdfe2;
+
+}
+.btn-container 
+{
+    text-align: center;
+}
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  font-size: 28px;
+}
+.nav-bar button#btn-toggle-jobs {
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 30px;
+  }
+  
 table {
     width: 80%;
     border-collapse: collapse;
@@ -10,4 +115,18 @@ table, th, td {
 th, td {
     padding: 8px;
     text-align: left;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    margin: 0 auto;
 }
