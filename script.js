@@ -3,17 +3,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const reset_button = document.getElementById("btn-reset-job");
     reset_button.addEventListener("click", resetJobAddition);
 
-    const add_button = document.getElementById("btn-add-job");
-    add_button.addEventListener("click", jobAddition);
+    const form = document.querySelector("form");
+    form.addEventListener("submit", jobAddition);
 
-    const refresh_button = document.getElementById("btn-refresh");
-    refresh_button.addEventListener("click", refresh);
+    const toggle_button = document.getElementById("btn-toggle-jobs");
+    toggle_button.addEventListener("click", toggleJobList);
+
+    loadJobs();
 });
 
-
+function loadJobs() {
+    const storedJobs = localStorage.getItem('jobList');
+    if (storedJobs) {
+        jobList = JSON.parse(storedJobs);
+        //renderTable(jobList);
+    }
+}
 // List of all job statuses
 let jobStatus=["Saved","Applied","Interview","Offer","Rejected","Withdrawn","Not Interested","Other"];
-
+//List of all Job Class properties
+let properties = ["url", "company", "role", "location", "notes", "status", "dateAdded"];
 //Definition of Job class
 class Job
 {
@@ -30,28 +39,7 @@ class Job
     }
 }
 
-//let jobListUL = document.getElementById("job-list");
-// Internal list of jobs
-let jobList = [];
 
-// Render the initial table
-let jobListTableEl = document.getElementById("job-list-table");
-const headers = ["URL", "Company", "Role", "Location", "Notes", "Status", "Date Added"];
-const thead = document.createElement("thead");
-const headerRow = document.createElement("tr");
-for(let i = 0; i < headers.length; i++)
-{
-    const th = document.createElement("th");
-    th.textContent = headers[i];
-    headerRow.appendChild(th);
-}
-thead.appendChild(headerRow);
-jobListTableEl.appendChild(thead);
-
-function refresh()
-{
-    renderTable(jobList);
-}
 function resetJobAddition()
 {
     document.getElementById("job-url").value = "";
@@ -63,11 +51,14 @@ function resetJobAddition()
 
 function jobAddition()
 {
+    event.preventDefault();
+    console.log('inside jobAddition');
     let jobUrlEl = document.getElementById("job-url");
+    console.log(jobUrlEl.value);
     if(!isTextValid(jobUrlEl.value))
     {
         alert("Please enter a valid URL");
-        return;
+        //return;
     }
     else
     {
@@ -83,9 +74,10 @@ function jobAddition()
             jobStatus[0],
             new Date());
         jobList.push(newJob);
-        //renderTable(jobList);
+        localStorage.setItem('jobList', JSON.stringify(jobList)); // Save to localStorage
     }
     resetJobAddition();
+    alert("Job added!");
 }
 
 function isTextValid(str)
@@ -100,6 +92,20 @@ function isTextValid(str)
 
 function renderTable(jobList)
 {
+    const jobListTableEl = document.getElementById("job-list-table");
+    jobListTableEl.innerHTML = "";
+    // Create table header
+    const headers = ["URL", "Company", "Role", "Location", "Notes", "Status", "Date Added"];
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    for (let i = 0; i < headers.length; i++) {
+        const th = document.createElement("th");
+        th.textContent = headers[i];
+        headerRow.appendChild(th);
+    }
+    thead.appendChild(headerRow);
+    jobListTableEl.appendChild(thead);
+
     // Create table body
     const tbody = document.createElement("tbody");
     for(let i = 0; i<jobList.length;i++)
@@ -116,13 +122,70 @@ function renderTable(jobList)
                 link.target = "_blank";
                 td.appendChild(link);
             }
+            else if (properties[j] === "status") 
+            {
+                const select = document.createElement("select");
+                jobStatus.forEach(status => {
+                    const option = document.createElement("option");
+                    option.value = status;
+                    option.textContent = status;
+                    if (status === jobList[i][properties[j]]) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+                select.addEventListener("change", function() {
+                    updateJobStatus(i, select.value);
+                });
+                td.appendChild(select);
+            }
             else 
             {
                 td.textContent = jobList[i][properties[j]] || ""; // Handle null values
             }
             tableRow.appendChild(td);
         }
+        const deleteTd = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", function() {
+            deleteJob(i);
+        });
+        deleteTd.appendChild(deleteButton);
+        tableRow.appendChild(deleteTd);
         tbody.appendChild(tableRow);
     }
+    let existingTbody = jobListTableEl.querySelector("tbody");
+    if (existingTbody) {
+      jobListTableEl.removeChild(existingTbody);
+    }
+
     jobListTableEl.appendChild(tbody);
+}
+
+function deleteJob(index) {
+    jobList.splice(index, 1); // Remove the job from the list
+    localStorage.setItem('jobList', JSON.stringify(jobList)); // Update localStorage
+    renderTable(jobList); // Re-render the table
+}
+function updateJobStatus(index, newStatus) {
+    jobList[index].status = newStatus;
+    localStorage.setItem('jobList', JSON.stringify(jobList)); // Update localStorage
+    renderTable(jobList); // Re-render the table
+}
+
+function toggleJobList() {
+    const viewJobsDiv = document.getElementById("view-jobs");
+    const addJobDiv = document.getElementById("add-job");
+    const toggleButton = document.getElementById("btn-toggle-jobs");
+    if (viewJobsDiv.style.display === "none" || viewJobsDiv.style.display === "") {
+        viewJobsDiv.style.display = "block";
+        addJobDiv.style.display = "none";
+        toggleButton.textContent = "Hide jobs";
+        renderTable(jobList);
+    } else {
+        viewJobsDiv.style.display = "none";
+        addJobDiv.style.display = "block";
+        toggleButton.textContent = "View all jobs";
+    }
 }

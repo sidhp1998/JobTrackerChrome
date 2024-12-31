@@ -1,34 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name = "viewport" content = "width=device-width, initial-scale=1"/>
         <title>Job Tracker</title>
-        <link rel="stylesheet" href="style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="style.css"/>
         <script src="script.js" defer></script>
+        <link rel="icon" href="icon.jpg"/>
     </head>
     <body> 
-        <header>
-            <h1>Job Tracker</h1><button id="btn-refresh">refresh</button>
-        </header>
-
-        <div id="add-new-job">
-            <input type="text" id="job-url" placeholder="Enter URL here" required><br>
-            <input type="text" id="job-company" placeholder="Enter Company here"><br>
-            <input type="text" id="job-role" placeholder="Enter role here"><br>
-            <input type="text" id="job-location" placeholder="Enter location here"><br>
-            <input type="text" id="job-notes" placeholder="If you have any notes..."><br>
-            <button type="submit" id="btn-add-job"">Add Job</button>
-            <button type="reset" id="btn-reset-job"">Reset</button>
+        <div class="nav-bar">
+            <div class="title">Job Tracker</div>
+            <button id="btn-toggle-jobs">View all jobs</button>
+            <!--<div><button id="btn-refresh">Refresh</button></div>-->
         </div>
-
-        <div id="view-all-jobs">
-            <h2>View all saved jobs</h2>
+        <div id="add-job" class="add-job">
+            <h2>Add a new job</h2>
+            <form>
+                <label for="job-url">URL:</label>
+                <input type="text" id="job-url" placeholder="Enter URL here" required/><br>
+                <label for="job-company">Company:</label>
+                <input type="text" id="job-company" placeholder="Enter Company here"/><br>
+                <label for="job-role">Role:</label>
+                <input type="text" id="job-role" placeholder="Enter role here"/><br>
+                <label for="job-location">Location:</label>
+                <input type="text" id="job-location" placeholder="Enter location here"/><br>
+                <label for="job-notes">Notes:</label>
+                <input type="text" id="job-notes" placeholder="If you have any notes..."/><br>
+                <div class="btn-container">
+                    <input type="submit" value="Submit" id="btn-add-job" class="inline"></button>
+                    <button type="reset" id="btn-reset-job" class="inline">Reset</button>
+                </div>
+            </form>
+        </div>
+        <div id="view-jobs" class="view-jobs">
             <div id="job-list-container">
                 <table id="job-list-table">
                 </table>
             </div>
         </div>
-
     </body>
+    <footer>
+        <div class="footer-content">
+            <p>Contact: moitreya.chaudhury@gmail.com</p>
+        </div>
+    </footer>
 </html>
